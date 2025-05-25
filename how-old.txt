@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Old Am I Today?</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
+      text-align: center;
+      padding: 60px 20px;
+      color: #2a2a2a;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    input[type="date"] {
+      font-size: 1.2em;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      font-size: 1.2em;
+      margin-top: 15px;
+      padding: 10px 25px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 1.3em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>How Old Am I Today?</h1>
+  <p>Enter your birthdate:</p>
+  <input type="date" id="birthdate">
+  <br>
+  <button onclick="calculateAge()">Calculate My Age</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculateAge() {
+      const birthInput = document.getElementById('birthdate').value;
+      if (!birthInput) return;
+
+      const birthDate = new Date(birthInput);
+      const now = new Date();
+
+      let years = now.getFullYear() - birthDate.getFullYear();
+      let months = now.getMonth() - birthDate.getMonth();
+      let days = now.getDate() - birthDate.getDate();
+
+      if (days < 0) {
+        months--;
+        days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+      }
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      const ageInMilliseconds = now - birthDate;
+      const ageInMinutes = Math.floor(ageInMilliseconds / 60000);
+
+      const resultText = `You are ${years} years, ${months} months, and ${days} days old today.\nThat's approximately ${ageInMinutes.toLocaleString()} minutes!`;
+      document.getElementById('result').textContent = resultText;
+    }
+  </script>
+</body>
+</html>
